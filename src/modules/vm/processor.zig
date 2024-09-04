@@ -14,3 +14,15 @@ pub fn init() Processor {
 
     return processor;
 }
+
+pub fn load_binary(self: *Processor, slice: []const u8) void {
+    std.mem.copyForwards(u8, self.binary, slice);
+}
+
+pub fn execute(self: *Processor) void {
+    for (0..self.binary.len) |i| {
+        const opcode = self.binary[i];
+
+        
+    }
+}
