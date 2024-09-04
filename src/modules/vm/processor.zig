@@ -2,6 +2,8 @@ const std = @import("std");
 
 const Processor = @This();
 const Register = @import("register.zig");
+const Instructions = @import("instructions.zig");
+const Template = @import("arch/template.zig");
 
 registers: [16]Register,
 binary: []const u8,
@@ -22,7 +24,8 @@ pub fn load_binary(self: *Processor, slice: []const u8) void {
 pub fn execute(self: *Processor) void {
     for (0..self.binary.len) |i| {
         const opcode = self.binary[i];
+        const instruction: Template = @as(@enumFromInt(opcode), Instructions.List);
 
-        
+        instruction.run(self.binary);
     }
 }
