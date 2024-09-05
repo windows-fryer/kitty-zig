@@ -21,11 +21,29 @@ pub fn load_binary(self: *Processor, slice: []const u8) void {
     std.mem.copyForwards(u8, self.binary, slice);
 }
 
-pub fn execute(self: *Processor) void {
-    for (0..self.binary.len) |i| {
-        const opcode = self.binary[i];
-        const instruction: Template = @as(@enumFromInt(opcode), Instructions.List);
+fn handle_extended(self: *Processor, binary: []const u8) usize {
+    _ = self;
+    _ = binary;
 
-        instruction.run(self.binary);
+    unreachable;
+}
+
+fn handle_non_extended(self: *Processor, binary: []const u8) usize {
+    const instruction = Instructions.List.vtable(binary[0]);
+
+    return instruction.run(self, binary);
+}
+
+pub fn execute(self: *Processor) void {
+    var index: usize = 0;
+
+    while (index < self.binary.len) {
+        const opcode = self.binary[index];
+
+        if (opcode & 0b0100_0000 != 0) {
+            index += self.handle_extended(self.binary[index..]);
+        } else {
+            index += self.handle_non_extended(self.binary[index..]);
+        }
     }
 }
