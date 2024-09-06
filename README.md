@@ -29,18 +29,3 @@
 <h3>Opcode Bit-layout</h3>
 
 <p>Each bit in every byte serves a purpose in the KLVM. A disassembled look at this can be seen below:</p>
-
-```mermaid
-flowchart LR
-    A[Instruction Start] -. Extended Flag -.-> B[Extended Instruction]
-    B -- Extended Continuation --> B
-    
-	D[Operand]
-	
-	B -.-> D
-
-    A ---> D
-    D -- Extended Operands --> D
-```
-
-<p> An expl
