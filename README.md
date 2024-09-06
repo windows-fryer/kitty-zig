@@ -34,9 +34,12 @@
 flowchart LR
     A[Instruction Start] -. Extended Flag -.-> B[Extended Instruction]
     B -- Extended Continuation --> B
-    B -.-> D
+    
+	D[Operand]
+	
+	B -.-> D
 
-    A ---> D[Operand]
+    A ---> D
     D -- Extended Operands --> D
 ```
 
