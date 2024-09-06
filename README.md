@@ -30,15 +30,14 @@
 
 <p>Each bit in every byte serves a purpose in the KLVM. A disassembled look at this can be seen below:</p>
 
-|Bit Index|Register Flag |Extended Instruction Flag|Normal                |
-|---------|--------------|-------------------------|----------------------|
-|8        |Register Flag |Reserved                 |Reserved              |
-|7        |32 Bit Mode   |Extended Instruction Flag|Reserved              |
-|6        |16 Bit Mode   |Operand 1 Numeric Mode   |Operand 1 Numeric Mode|
-|5        |8 Bit Mode    |Operand 2 Numeric Mode   |Operand 2 Numeric Mode|
-|4        |Register Index|Instruction Index        |Operand 3 Numeric Mode|
-|3        |Register Index|Instruction Index        |Operand 4 Numeric Mode|
-|2        |Register Index|Instruction Index        |Operand 5 Numeric Mode|
-|1        |Register Index|Instruction Index        |Operand 6 Numeric Mode|
+```mermaid
+flowchart LR
+    A[Instruction Start] -. Extended Flag -.-> B[Extended Instruction]
+    B -- Extended Continuation --> B
+    B -.-> D
 
-<p>When the Extended Instruction Flag is used, the next byte in its entirety will be used for instruction indices.</p>
+    A ---> D[Operand]
+    D -- Extended Operands --> D
+```
+
+<p> An expl
